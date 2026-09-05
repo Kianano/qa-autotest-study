@@ -1,5 +1,42 @@
-Das Testen/Testing
+Das Testen/Testing/Тестування
 de - Das Testen von Software ist eine Reihe von Aktivitäten zur Entdeckung von Fehlerzuständen
 und zur Bewertung der Qualität von Softwareartefakten. Werden diese Artefakte getestet,
 werden sie als Testobjekte bezeichnet.
-eng - 
+eng - Testing is the process of evaluating a software product or system and checking whether it meets specified requirements and behaves as expected.
+
+Fehlerzustand — error condition / помилковий стан
+
+🇩🇪 Fehlerzustand
+Ein Fehlerzustand ist ein Zustand eines Softwaresystems, der durch einen Fehler verursacht wurde und zu einem unerwarteten oder falschen Verhalten führen kann.
+Ein Fehlerzustand ist ein Zustand, in dem das System nicht so ist, wie es sein sollte.
+
+Softwareartefakt — software work product / програмний артефакт
+
+🇩🇪 Softwareartefakt
+
+Ein Softwareartefakt ist ein Arbeitsergebnis, das während der Entwicklung, Wartung oder Nutzung einer Software entsteht.
+
+Тобто це не тільки готова програма.
+
+До Softwareartekte gehören zum Beispiel:
+
+* Quellcode — Quellcode
+* Anforderungen — Anforderungen
+* User Stories
+* Akzeptanzkriterien — Akzeptanzkriterien
+* Architektur- und Designdokumente
+* Testfälle — Testfälle
+* Testdaten — Testdaten
+* Testskripte — Testskripte
+* API-Spezifikation
+* Dokumentation
+* Datenbank-Skripte
+
+І ось важливий зв’язок:
+
+Softwareartefakt → це те, що створене як результат роботи над software.
+
+Якщо ми його тестуємо:
+
+Softwareartefakt → Testobjekt
+
