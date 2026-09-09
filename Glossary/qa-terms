@@ -1,16 +1,778 @@
-Das Testen/Testing/Тестування
-de - Das Testen von Software ist eine Reihe von Aktivitäten zur Entdeckung von Fehlerzuständen
-und zur Bewertung der Qualität von Softwareartefakten. Werden diese Artefakte getestet,
-werden sie als Testobjekte bezeichnet.
-eng - Testing is the process of evaluating a software product or system and checking whether it meets specified requirements and behaves as expected.
+1. Das Testen/Testing/Тестування
+  de: Das Testen von Software ist eine Reihe von Aktivitäten zur Entdeckung von Fehlerzuständen
+    und zur Bewertung der Qualität von Softwareartefakten. Werden diese Artefakte getestet,
+    werden sie als Testobjekte bezeichnet. Testen kann Fehlerwirkungen auslösen, die
+    durch Fehlerzustände in der Software verursacht werden (dynamischer Test), oder kann direkt
+    Fehlerzustände im Testobjekt finden (statischer Test).
+  eng: Testing is the process of evaluating a software product or system and checking whether it meets specified requirements and behaves as expected.
 
-Fehlerzustand — error condition / помилковий стан
+2. Fehlerzustand — error condition / помилковий стан
+  de: Ein Fehlerzustand ist ein Zustand eines Softwaresystems, der durch einen Fehler verursacht wurde und zu einem unerwarteten oder falschen Verhalten führen kann.
+    Ein Fehlerzustand ist ein Zustand, in dem das System nicht so ist, wie es sein sollte.
+
+3. Softwareartefakt — software work product / програмний артефакт
+  de: Ein Softwareartefakt ist ein Arbeitsergebnis, das während der Entwicklung, Wartung oder Nutzung einer Software entsteht.
+    До Softwareartekte gehören zum Beispiel:
+    * Quellcode — Quellcode
+    * Anforderungen — Anforderungen
+    * User Stories
+    * Akzeptanzkriterien — Akzeptanzkriterien
+    * Architektur- und Designdokumente
+    * Testfälle — Testfälle
+    * Testdaten — Testdaten
+    * Testskripte — Testskripte
+    * API-Spezifikation
+    * Dokumentation
+    * Datenbank-Skripte
+    І ось важливий зв’язок:
+    Softwareartefakt → це те, що створене як результат роботи над software.
+    Якщо ми його тестуємо:
+    Softwareartefakt → Testobjekt
+
+4. Debugging 
+  de: Wenn ein dynamischer Test eine Fehlerwirkung auslöst, geht es beim Debugging darum, die Ursachen für diese Fehlerwirkung (die Fehlerzustände) zu finden, diese
+    zu analysieren und zu beseitigen. Der typische Debugging-Prozess umfasst in diesem Fall:
+    • Reproduzieren einer Fehlerwirkung
+    • Diagnose (Befund der Grundursache)
+    • Behebung der Ursache
+
+5. Test basis — Testbasis
+  de: Die Testbasis ist die Gesamtheit der Informationen, auf deren Grundlage Tests entworfen und durchgeführt werden.
+  eng: Test basis is the body of information used as the basis for designing and implementing tests.
+  QA interpretation
+    The test basis answers:
+    "What information am I using to decide what to test?"
+  Typical test bases:
+    requirements;
+    user stories;
+    acceptance criteria;
+    specifications;
+    API documentation;
+    architecture documentation;
+    business rules;
+    UI designs;
+    contracts;
+    regulatory requirements;
+    existing system behavior.
+  Example
+    You receive this user story:
+    As a customer, I want to reset my password so that I can regain access to my account.
+    The user story and acceptance criteria become part of your test basis.
+    You don't invent the functionality from nothing.
+
+6. Test condition — Testbedingung / Testbedingung bzw. Testaspekt
+  de: Eine Testbedingung ist ein prüfbarer Aspekt eines Systems, der durch einen oder mehrere Testfälle überprüft werden kann.
+  eng: A test condition is an aspect of a testable system that can be verified by one or more test cases.
+  QA interpretation
+    Think: WHAT do I want to test?
+    A test condition is more specific than "test login" but less detailed than a test case.
+  Example
+    Requirement:
+      Users can reset their password using their registered email address.
+    Possible test conditions:
+      registered email can request password reset;
+      unregistered email cannot reset password;
+      reset link expires;
+      reset link can only be used once;
+      new password must satisfy password rules.
+    These are test conditions.
+
+7. Test scenario — Testszenario
+  de: Ein Testszenario beschreibt eine Situation oder einen Ablauf, der getestet werden soll.
+  eng: A test scenario describes a situation or flow that should be tested.
+  QA interpretation
+    Think:
+    WHAT REAL-WORLD SITUATION am I testing?
+    A scenario usually describes a broader user journey.
+  Example
+    Scenario:
+    Customer completes a purchase using a credit card.
+    Inside this scenario you might have several test cases:
+      successful payment;
+      expired card;
+      insufficient funds;
+      invalid CVV;
+      payment timeout;
+      payment cancelled.
+      Important distinction  
+    Test condition = what aspect?
+    Test scenario = what situation/flow?
+    In real projects, people sometimes use these terms loosely or interchangeably. ISTQB terminology tries to distinguish them, but don't get trapped by terminology if the team uses "scenario" differently.
+
+8. Test case — Testfall
+  de: Ein Testfall ist eine Zusammenstellung von Vorbedingungen, Eingaben, Aktionen und erwarteten Ergebnissen, die entwickelt wurde, um ein bestimmtes Testziel zu überprüfen.
+  eng: A test case is a set of preconditions, inputs, actions, and expected results developed to verify a specific test objective.
+  QA interpretation
+    Think:
+    HOW exactly am I going to test it?
+    A test case normally contains:
+      ID
+      title
+      preconditions
+      test data
+      steps
+      expected result
+  Example
+    TC-LOGIN-001
+    Precondition:
+      Registered user exists.
+    Steps:
+      Open login page.
+      Enter valid email.
+      Enter valid password.
+      Click "Login".
+    Expected result:
+      User is logged in and redirected to the dashboard.
+    That's a test case.
+
+9. Expected result — Erwartetes Ergebnis
+  de: Das erwartete Ergebnis beschreibt das Verhalten oder Ergebnis, das bei korrekter Ausführung des Tests eintreten soll.
+  eng: The expected result is the behavior or outcome that should occur when the test is executed correctly.
+  QA interpretation
+    Think: What SHOULD happen?
+  Example
+    Action: Enter valid credentials and click Login.
+    Expected result: User is authenticated and redirected to the dashboard.
+  The expected result should ideally come from the test basis, not from the tester's imagination.
+
+10. Actual result — Tatsächliches Ergebnis
+  de: Das tatsächliche Ergebnis ist das Verhalten oder Ergebnis, das bei der tatsächlichen Durchführung eines Tests auftritt.
+  eng: The actual result is the behavior or outcome that occurs when the test is executed.
+  QA interpretation
+    Think: What DID actually happen?
+  Example
+    Expected: User is redirected to Dashboard.
+    Actual: Login request returns HTTP 500 and the user remains on the login page.
+    Now you have a discrepancy:
+    Expected ≠ Actual
+    That may indicate a defect.
+
+11. Test oracle — Testorakel
+de: Ein Testorakel ist eine Quelle oder ein Mechanismus, anhand dessen bestimmt werden kann, ob das tatsächliche Testergebnis korrekt ist.
+eng: A test oracle is a source or mechanism used to determine whether the actual result of a test is correct.
+QA interpretation
+  The key question is: How do I know what the correct result is?
+Examples:
+  requirement;
+  acceptance criteria;
+  business rule;
+  API specification;
+  mathematical calculation;
+  database constraint;
+  previous known-good version;
+  another trusted system;
+  domain expert.
+Example
+  You test:
+  10 + 5
+  Expected result:
+  15
+  What's your oracle?
+  The mathematical rule that defines addition.
+
+Another example:
+
+API documentation says:
+
+POST /users returns HTTP 201 when a user is successfully created.
+
+The API specification is your test oracle.
+
+Very important
+
+Expected result ≠ test oracle.
+
+Expected result is:
+
+What should happen?
+
+Test oracle is:
+
+How do I know that this is what should happen?
+
+12. Defect — Defekt / Fehler
+🇬🇧 English
+
+A defect is an imperfection or flaw in a work product that may cause the system to fail to perform a required function.
+
+🇩🇪 Deutsch
+
+Ein Defekt ist eine Unvollkommenheit oder ein Fehler in einem Arbeitsergebnis, der dazu führen kann, dass ein System eine erforderliche Funktion nicht korrekt ausführt.
+
+QA interpretation
+
+A defect is a problem in the product.
+
+Example:
+
+Requirement:
+
+Password must contain at least 8 characters.
+
+Actual implementation:
+
+Passwords with 5 characters are accepted.
+
+That's a defect.
+
+Important terminology
+
+You may encounter:
+
+Error → menschlicher Fehler
+
+Defect/Bug → Fehler im Work Product / Code
+
+Failure → beobachtbares Fehlverhalten während der Ausführung
+
+A developer makes an incorrect assumption → error
+
+That creates incorrect code → defect
+
+The application crashes when executed → failure
+
+13. Risk — Risiko
+🇬🇧 English
+
+Risk is a potential event, hazard, or situation that could have a negative impact on the product or project.
+
+In testing, risk is often considered in terms of:
+
+Probability × Impact
+
+🇩🇪 Deutsch
+
+Ein Risiko ist ein potenzielles Ereignis oder eine Situation, die negative Auswirkungen auf das Produkt oder Projekt haben kann.
+
+Beim Testen wird Risiko häufig anhand von:
+
+Wahrscheinlichkeit × Auswirkung
+
+bewertet.
+
+QA interpretation
+
+Risk answers:
+
+What could go wrong, and how bad would it be?
+
+Example:
+
+Payment processing:
+
+Probability of failure: medium
+
+Business impact: very high
+
+→ High risk
+
+Therefore you should test payment functionality more thoroughly than, for example, changing the color of a button.
+
+This is extremely important for QA
+
+You cannot test everything.
+
+Therefore:
+
+Risk determines where you spend your testing effort.
+
+12. Test level — Teststufe
+🇬🇧 English
+
+A test level is a group of testing activities organized and managed together.
+
+Common test levels:
+
+Component testing
+Component integration testing
+System testing
+System integration testing
+Acceptance testing
+🇩🇪 Deutsch
+
+Eine Teststufe ist eine Gruppe von Testaktivitäten, die gemeinsam organisiert und durchgeführt werden.
+
+Typische Teststufen:
+
+Komponententest
+Komponenten-Integrationstest
+Systemtest
+Systemintegrationstest
+Abnahmetest
+QA interpretation
+
+Test level answers:
+
+WHERE in the system/test hierarchy am I testing?
+
+Example:
+
+Unit / Component
+       ↓
+Integration
+       ↓
+System / E2E
+       ↓
+Acceptance
+Example
+
+Testing a function:
+
+calculateTotal()
+
+→ component/unit level.
+
+Testing frontend + backend:
+
+UI → API → Database
+
+→ integration/system level.
+
+Testing the complete customer purchase journey:
+
+Login → Search → Cart → Payment → Confirmation
+
+→ system/E2E level.
+
+13. Test type — Testart
+🇬🇧 English
+
+A test type is a group of test activities aimed at evaluating specific characteristics of a software system.
+
+🇩🇪 Deutsch
+
+Eine Testart ist eine Gruppe von Testaktivitäten, die darauf ausgerichtet ist, bestimmte Eigenschaften eines Softwaresystems zu bewerten.
+
+Common test types:
+
+Functional testing
+
+Does it do what it should?
+
+Funktionales Testen
+
+Performance testing
+
+Is it fast and scalable enough?
+
+Performanz-/Performance-Testing
+
+Security testing
+
+Is it protected against threats?
+
+Sicherheitstesten
+
+Usability testing
+
+Can users use it effectively?
+
+Gebrauchstauglichkeitstest / Usability-Test
+
+Compatibility testing
+
+Does it work across supported browsers/devices?
+
+Kompatibilitätstest
+
+Regression testing
+
+Did existing functionality remain working after changes?
+
+Regressionstest
+
+QA interpretation
+
+Test level and test type are not the same thing.
+
+For example:
+
+System + functional
+
+or:
+
+System + performance
+
+or:
+
+Component + functional
+
+You can combine them.
+
+14. Verification vs Validation
+
+This is another fundamental QA concept.
+
+Verification — Verifizierung
+🇬🇧 English
+
+Verification asks:
+
+Are we building the product right?
+
+It checks whether the product conforms to specified requirements and design.
+
+🇩🇪 Deutsch
+
+Verifizierung fragt:
+
+Bauen wir das Produkt richtig?
+
+Es wird überprüft, ob das Produkt den festgelegten Anforderungen und Spezifikationen entspricht.
+
+Examples:
+
+code review;
+requirements review;
+design review;
+static analysis;
+checking API contract;
+checking implementation against specification.
+Validation — Validierung
+🇬🇧 English
+
+Validation asks:
+
+Are we building the right product?
+
+It evaluates whether the system actually satisfies user and business needs.
+
+🇩🇪 Deutsch
+
+Validierung fragt:
+
+Bauen wir das richtige Produkt?
+
+Es wird überprüft, ob das System tatsächlich die Bedürfnisse der Benutzer und des Geschäfts erfüllt.
+
+Example
+
+Business requirement:
+
+Customers need to find products quickly.
+
+The developer creates a technically correct search function.
+
+Verification:
+
+Does search conform to the specification?
+
+Yes.
+
+Validation:
+
+Can real customers actually find products quickly?
+
+Maybe not.
+
+The search might technically work but provide terrible UX.
+
+The whole system together
+
+This is the part I recommend you memorize.
+
+Imagine you're testing a login function.
+
+QUALITY
+   │
+   ├── What does "good" mean?
+   │
+   ↓
+RISK
+   │
+   ├── What could go wrong?
+   │
+   ↓
+TEST BASIS
+   │
+   ├── Requirements
+   ├── Acceptance criteria
+   ├── API specification
+   │
+   ↓
+TEST CONDITIONS
+   │
+   ├── Valid login
+   ├── Invalid password
+   ├── Locked account
+   └── Empty password
+   │
+   ↓
+TEST SCENARIO
+   │
+   └── User logs into the application
+   │
+   ↓
+TEST CASE
+   │
+   ├── Preconditions
+   ├── Test data
+   ├── Steps
+   └── Expected result
+   │
+   ↓
+EXECUTION
+   │
+   ├── Expected result
+   │
+   └── Actual result
+   │
+   ↓
+COMPARISON
+   │
+   ├── Match → PASS
+   │
+   └── Don't match → investigate
+   │
+   ↓
+DEFECT?
+
+And behind the comparison is your:
+
+TEST ORACLE
+
+How do I know what the correct result should be?
+
+The German terminology you should recognize
+
+For your ISTQB + German QA interviews, I would learn these pairs almost automatically:
+
+English	German	Think
+Quality	Qualität	How good is it?
+Testing	Testen	Investigate the system
+Test basis	Testbasis	What information do I test against?
+Test condition	Testbedingung	What aspect do I test?
+Test scenario	Testszenario	What situation/flow do I test?
+Test case	Testfall	How exactly do I test it?
+Expected result	Erwartetes Ergebnis	What should happen?
+Actual result	Tatsächliches Ergebnis	What happened?
+Test oracle	Testorakel	How do I know what's correct?
+Defect	Defekt / Fehler	What's wrong in the product?
+Risk	Risiko	What could go wrong?
+Test level	Teststufe	Where do I test?
+Test type	Testart	What characteristic do I test?
+Verification	Verifizierung	Are we building it right?
+Validation	Validierung	Are we building the right thing?
+One mental model to keep
+
+If you're feeling lost in QA terminology, don't learn these as 14 isolated definitions.
+
+Think of them as a chain:
+
+Requirements → Risks → What to test → How to test → What should happen → What actually happened → Is it correct? → Is there a defect?
+
+And then:
+
+Test level = where
+
+Test type = what quality characteristic
+
+Verification = against specification
+
+Validation = against real needs
+
+That distinction is much more useful in an interview than being able to recite textbook definitions.
+
+Wed, Aug 26 at 9:55 AM
+add to that already Test object
+
+Yes. Test object belongs near the beginning of the model because before you decide what to test, you need to know what exactly is being tested.
+
+Test object — Testobjekt / Testgegenstand
+🇬🇧 English
+
+A test object is the work product or part of a system that is being tested.
+
+In simple words:
+
+What exactly are we testing?
+
+It can be:
+
+a complete application;
+a web page;
+a feature;
+a component;
+an API;
+a database;
+a microservice;
+a mobile app;
+a document;
+a piece of code.
+🇩🇪 Deutsch
+
+Ein Testobjekt bzw. Testgegenstand ist ein Arbeitsergebnis oder ein Teil eines Systems, das getestet wird.
+
+Einfach gesagt:
+
+Was genau wird getestet?
+
+Beispiele:
+  eine komplette Anwendung;
+  eine Webseite;
+  eine Funktion;
+  eine Komponente;
+  eine API;
+  eine Datenbank;
+  ein Microservice;
+  eine mobile Anwendung;
+  ein Dokument;
+  ein Stück Code.
+  QA interpretation
+
+The test object answers:
+
+WHAT is the object of my testing?
+
+This is different from test condition.
+
+Example: Login
+
+Suppose you are testing an online shop.
+
+Test object:
+
+Login functionality
+
+Test condition:
+
+User can log in with valid credentials.
+
+Test scenario:
+
+Registered customer logs into the webshop.
+
+Test case:
+
+Enter valid email → enter valid password → click Login.
+
+Expected result:
+
+Customer is successfully logged in and redirected to the dashboard.
+
+Actual result:
+
+Error message "Internal Server Error" appears.
+
+Defect:
+
+Login with valid credentials results in HTTP 500 instead of successful authentication.
+
+Where Test Object fits into the whole model
+
+I would now structure your mental model like this:
+
+QUALITY
+   │
+   ↓
+RISK
+   │
+   ↓
+TEST BASIS
+   │
+   ↓
+TEST OBJECT
+   │
+   ↓
+TEST CONDITION
+   │
+   ↓
+TEST SCENARIO
+   │
+   ↓
+TEST CASE
+   │
+   ├── Preconditions
+   ├── Test data
+   ├── Steps
+   └── Expected result
+             │
+             ↓
+          EXECUTION
+             │
+       ┌─────┴─────┐
+       ↓           ↓
+EXPECTED        ACTUAL
+RESULT          RESULT
+       │           │
+       └─────┬─────┘
+             ↓
+       TEST ORACLE
+             │
+             ↓
+       PASS / FAIL
+             │
+             ↓
+          DEFECT?
+
+There are also two dimensions running across this whole process:
+
+TEST LEVEL
+Where are we testing?
+──────────────────────────────
+Component
+Integration
+System
+Acceptance
+
+
+TEST TYPE
+What are we testing?
+──────────────────────────────
+Functional
+Performance
+Security
+Usability
+Compatibility
+Regression
+etc.
+The key distinction
+Term	Question it answers
+Test object	What exactly am I testing?
+Test basis	What information tells me what it should do?
+Test condition	Which aspect of it am I checking?
+Test scenario	Which situation/flow am I testing?
+Test case	How exactly will I test it?
+Expected result	What should happen?
+Actual result	What actually happened?
+Test oracle	How do I know what is correct?
+Defect	What is wrong?
+Risk	What could go wrong and how serious is it?
+Test level	At which level am I testing?
+Test type	Which characteristic am I evaluating?
+
+For your QA learning, Test object → Test basis → Test condition → Test scenario → Test case is an especially useful sequence to understand. It prevents the common beginner mistake of jumping straight from a user story to writing test cases without first understanding what the actual testing target and risks are.
+
+Saturday 11:38 AM
+Das Testen von Software ist eine Reihe von Aktivitäten zur Entdeckung von Fehlerzuständen
+und zur Bewertung der Qualität von Softwareartefakten. Werden diese Artefakte getestet,
+werden sie als Testobjekte bezeichnet. - додай з цього визначення з ISTQB що таке Fehlerzuständen і Sofrwareartefakten
+
+Так. Тут важливо додати ці два терміни, бо в ISTQB вони пов'язані безпосередньо з визначенням Testing і Testobjekt.
+
+1. Fehlerzustand — error condition / помилковий стан
 
 🇩🇪 Fehlerzustand
 Ein Fehlerzustand ist ein Zustand eines Softwaresystems, der durch einen Fehler verursacht wurde und zu einem unerwarteten oder falschen Verhalten führen kann.
+
+Простіше для QA:
+
 Ein Fehlerzustand ist ein Zustand, in dem das System nicht so ist, wie es sein sollte.
 
-Softwareartefakt — software work product / програмний артефакт
+Наприклад:
+
+Requirement: Passwort muss mindestens 8 Zeichen haben.
+System akzeptiert Passwort mit 5 Zeichen.
+
+→ Das System befindet sich in einem Fehlerzustand.
+
+⚠️ Не плутати:
+
+Fehler (error) → помилка людини
+Defekt (defect) → недолік у software work product
+Fehlerzustand (error condition) → стан системи, спричинений помилкою/дефектом
+Failure → фактичне неправильне спостережуване виконання системи
+2. Softwareartefakt — software work product / програмний артефакт
 
 🇩🇪 Softwareartefakt
 
@@ -20,23 +782,72 @@ Ein Softwareartefakt ist ein Arbeitsergebnis, das während der Entwicklung, Wart
 
 До Softwareartekte gehören zum Beispiel:
 
-* Quellcode — Quellcode
-* Anforderungen — Anforderungen
-* User Stories
-* Akzeptanzkriterien — Akzeptanzkriterien
-* Architektur- und Designdokumente
-* Testfälle — Testfälle
-* Testdaten — Testdaten
-* Testskripte — Testskripte
-* API-Spezifikation
-* Dokumentation
-* Datenbank-Skripte
-
-І ось важливий зв’язок:
+Quellcode — Quellcode
+Anforderungen — Anforderungen
+User Stories
+Akzeptanzkriterien — Akzeptanzkriterien
+Architektur- und Designdokumente
+Testfälle — Testfälle
+Testdaten — Testdaten
+Testskripte — Testskripte
+API-Spezifikation
+Dokumentation
+Datenbank-Skripte
+І ось важливий зв'язок:
 
 Softwareartefakt → це те, що створене як результат роботи над software.
 
 Якщо ми його тестуємо:
 
 Softwareartefakt → Testobjekt
+
+Наприклад:
+
+Requirement
+    ↓
+Softwareartefakt
+    ↓
+wird getestet
+    ↓
+Testobjekt
+
+Або:
+
+Quellcode
+API
+User Story
+Testfall
+Dokumentation
+    ↓
+Softwareartefakte
+    ↓
+können Testobjekte sein
+Твоє ISTQB-визначення тепер можна розуміти так
+
+Das Testen von Software ist eine Reihe von Aktivitäten zur Entdeckung von Fehlerzuständen und zur Bewertung der Qualität von Softwareartefakten. Werden diese Artefakte getestet, werden sie als Testobjekte bezeichnet.
+
+Тобто:
+
+Testing = Aktivitäten, um
+
+Fehlerzustände zu entdecken → знайти стани, в яких система неправильна;
+Qualität von Softwareartefakten zu bewerten → оцінити якість результатів роботи над software.
+
+І:
+
+Softwareartefakt, das gerade getestet wird = Testobjekt.
+
+Це дуже хороша ISTQB-формула для запам'ятовування:
+
+Artefakt → wird getestet → Testobjekt.
+
+
+
+
+
+
+
+
+
+
 
